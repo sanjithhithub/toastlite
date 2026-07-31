@@ -10,7 +10,8 @@
   "scripts": {
     "serve": "npx serve .",
     "open": "npx serve . -o",
-    "test": "node --check src/toast.js"
+    "test": "node --check src/toast.js",
+    "prepublishOnly": "npm test"
   },
   "keywords": [
     "toast",
@@ -26,6 +27,6 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/toastlite.git"
+    "url": "git+https://github.com/sanjithhithub/toastlite.git"
   }
 }
