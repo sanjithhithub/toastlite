@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>toastlite — demo</title>
+  <link rel="stylesheet" href="toast.css" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 16px;
+      padding: 32px;
+      width: min(480px, 90vw);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    }
+    h1 { margin: 0 0 4px; font-size: 28px; }
+    .subtitle { margin: 0 0 24px; color: rgba(255, 255, 255, 0.7); font-size: 14px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .btn {
+      padding: 12px 16px;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+    .btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
+    .btn:active { transform: translateY(0); }
+    .btn-success { background: #2ed573; }
+    .btn-error { background: #ff4757; }
+    .btn-warning { background: #ffa502; }
+    .btn-info { background: #1e90ff; }
+    .field { margin-top: 20px; }
+    label { display: block; font-size: 13px; margin-bottom: 6px; color: rgba(255, 255, 255, 0.8); }
+    select, input[type="text"], input[type="number"] {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(0, 0, 0, 0.3);
+      color: #fff;
+      font-size: 14px;
+    }
+    .checks { display: flex; gap: 20px; flex-wrap: wrap; }
+    .checks label { display: flex; align-items: center; gap: 6px; margin: 0; cursor: pointer; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .hint { margin-top: 20px; font-size: 12px; color: rgba(255, 255, 255, 0.55); }
+    code {
+      background: rgba(255, 255, 255, 0.12);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>toastlite</h1>
+    <p class="subtitle">A tiny toast notification library — try it below.</p>
+
+    <div class="grid">
+      <button class="btn btn-success" onclick="Toast.success('Changes saved successfully.')">Success</button>
+      <button class="btn btn-error" onclick="Toast.error('Oops! Something went wrong.')">Error</button>
+      <button class="btn btn-warning" onclick="Toast.warning('Please double-check your input.')">Warning</button>
+      <button class="btn btn-info" onclick="Toast.info('You have 3 new messages.')">Info</button>
+    </div>
+
+    <div class="field">
+      <label for="msg">Custom message</label>
+      <input type="text" id="msg" value="Hello from toastlite!" />
+    </div>
+
+    <div class="field row">
+      <div>
+        <label for="position">Position</label>
+        <select id="position">
+          <option value="top-right" selected>top-right</option>
+          <option value="top-left">top-left</option>
+          <option value="top-center">top-center</option>
+          <option value="bottom-right">bottom-right</option>
+          <option value="bottom-left">bottom-left</option>
+          <option value="bottom-center">bottom-center</option>
+        </select>
+      </div>
+      <div>
+        <label for="duration">Duration (ms)</label>
+        <input type="number" id="duration" value="3000" min="0" step="500" />
+      </div>
+    </div>
+
+    <div class="field checks">
+      <label><input type="checkbox" id="progress" checked /> Progress bar</label>
+      <label><input type="checkbox" id="closable" checked /> Close button</label>
+      <label><input type="checkbox" id="clickDismiss" checked /> Click to dismiss</label>
+    </div>
+
+    <div class="field">
+      <button class="btn btn-info" id="customBtn" style="width: 100%;">Show custom toast</button>
+    </div>
+
+    <p class="hint">Usage: <code>Toast.success('Saved!')</code> · <code>Toast.error('Nope')</code> · <code>Toast.info('Hey', { position: 'bottom-left' })</code></p>
+  </main>
+
+  <script src="toast.js"></script>
+  <script>
+    document.getElementById('customBtn').addEventListener('click', function () {
+      Toast.info(document.getElementById('msg').value || 'Empty message', {
+        position: document.getElementById('position').value,
+        duration: parseInt(document.getElementById('duration').value, 10) || 0,
+        progressBar: document.getElementById('progress').checked,
+        closable: document.getElementById('closable').checked,
+        clickToDismiss: document.getElementById('clickDismiss').checked,
+      });
+    });
+  </script>
+</body>
+</html>
